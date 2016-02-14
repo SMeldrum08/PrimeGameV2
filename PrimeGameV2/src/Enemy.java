@@ -81,6 +81,15 @@ public class Enemy extends JLabel {
 		}
 	}
 	
+	public void makeEnemyPrime(){
+		setText(""+primeArray[(int )(Math.random()*12)]);
+	}
+	
+	public void changeEnemySpeed(){
+		xMovement = (int )(Math.random()*20);
+		yMovement = (int )(Math.random()*20);
+	}
+	
 
 	public class MovementTask  extends TimerTask {
 		int timerDuration;

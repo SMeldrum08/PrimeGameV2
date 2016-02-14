@@ -21,9 +21,8 @@ public class MainGame extends JFrame{
 	Enemy enemy6;
 	Enemy enemy7;
 	Enemy enemy8;
-	/*ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	enemies.add();*/
-	int enemyPrimeStatus[] = {0,0,0,0,0,0,0,0,0};
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	int enemyPrimeStatus[] = {1,0,0,0,0,2,2,2,2};
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	Timer timer;
 	Timer timer2;
@@ -52,6 +51,11 @@ public class MainGame extends JFrame{
 	score = 0;
 	progress = 0;
 	timeAttackScore = 0;
+	
+	enemies.add(enemy1);
+	enemies.add(enemy2);
+	enemies.add(enemy3);
+	enemies.add(enemy4);
 	
 	background1 = new JPanel();
 	background1.setBackground(new Color(228, 131, 255));
@@ -95,9 +99,7 @@ public class MainGame extends JFrame{
 	Handlerclass handler = new Handlerclass();
 	background1.addMouseListener(handler);
 	background1.addMouseMotionListener(handler);
-	//Handlerclass handler = new Handlerclass();
-	
-	//addMouseListener(handler);
+
 	
 	ReminderBeep(40);
 	ProgressIndicator(speedProgress);
@@ -151,24 +153,26 @@ public class MainGame extends JFrame{
 	    public void run() {
     		timeAttackScore++;
     		
-    		/*int enemyNumber = 1;
+    		int enemyNumber = 1;
     		for (Enemy e : enemies) {
     			collisionDetectorAndEvent(e, enemyNumber++);
     		}	
-    		for (int i=0; i<enemies.size(); i++) {
+    		/*for (int i=0; i<enemies.size(); i++) {
     			collisionDetectorAndEvent(enemies.get(i), i);
     		}*/
     		
-    		collisionDetectorAndEvent(enemy1,1);
-    		collisionDetectorAndEvent(enemy2,2);
-    		collisionDetectorAndEvent(enemy3,3);
-    		collisionDetectorAndEvent(enemy4,4);
-    		collisionDetectorAndEvent(enemy5,5);
-    		collisionDetectorAndEvent(enemy6,6);
-    		collisionDetectorAndEvent(enemy7,7);
-    		collisionDetectorAndEvent(enemy8,8);
+    		//collisionDetectorAndEvent(enemy1,1);
+    		//collisionDetectorAndEvent(enemy2,2);
+    		//collisionDetectorAndEvent(enemy3,3);
+    		//collisionDetectorAndEvent(enemy4,4);
+    		//collisionDetectorAndEvent(enemy5,5);
+    		//collisionDetectorAndEvent(enemy6,6);
+    		//collisionDetectorAndEvent(enemy7,7);
+    		//collisionDetectorAndEvent(enemy8,8);
     		
 	    	statusBar.setText(""+score);
+	    	
+	    	areAllEnemiesCompositeAction();
 	    	
     		
 	    }
@@ -206,9 +210,51 @@ public class MainGame extends JFrame{
 			}
 			enemyPrimeStatus[enemyNumber] = label.randomValue();
 			label.relocate(cursorSquare);
+			label.changeEnemySpeed();
 		}
 	  }
   }//end of collisionDetectorAndEvent
+  
+  public void areAllEnemiesCompositeAction(){
+	  if( areAllEnemiesComposite() == false  ){
+		  int enemyNumber = 1;
+		  for (Enemy e : enemies) {
+  			e.makeEnemyPrime();
+  			enemyPrimeStatus[enemyNumber++] = 0;
+  		}	
+		  
+		 // enemy1.makeEnemyPrime();
+		 // enemyPrimeStatus[1] = 0;
+		 // enemy2.makeEnemyPrime();
+		 // enemyPrimeStatus[2] = 0;
+		 // enemy3.makeEnemyPrime();
+		 // enemyPrimeStatus[3] = 0;
+		 // enemy4.makeEnemyPrime();
+		 // enemyPrimeStatus[4] = 0;
+	  	/*for (int i=0;i<enemyPrimeStatus.length;i++){
+	  		if (enemyPrimeStatus[i] < 2){
+	  			//method to make numbers prime
+	  		}
+	  	}*/  //for end
+	  }	
+  }	  
+ 
+  public boolean areAllEnemiesComposite(){
+	  int noPrime = 0;
+	  for (int i=0;i<enemyPrimeStatus.length;i++){
+		  if (enemyPrimeStatus[i] == 0){
+			  noPrime = 1;
+		  }
+	  }
+	  if(noPrime == 1){
+		  return true;
+	  }
+	  else{
+		  return false;
+	  }
+	  
+	  
+  }
   
   
   
@@ -223,24 +269,29 @@ public class MainGame extends JFrame{
 		    		background1.add(enemy5);
 		    		enemyPrimeStatus[5] = enemy5.randomValue();
 		    		enemy5.relocate(cursorSquare);
+		    		enemies.add(enemy5);
 		    	}
 		    	if(progress == 4){
 		    		enemy6 = new Enemy();
 		    		background1.add(enemy6);
 		    		enemyPrimeStatus[6] = enemy6.randomValue();
 		    		enemy6.relocate(cursorSquare);
+		    		enemies.add(enemy6);
+		    		
 		    	}
 		    	if(progress == 6){
 		    		enemy7 = new Enemy();
 		    		background1.add(enemy7);
 		    		enemyPrimeStatus[7] = enemy7.randomValue();
 		    		enemy7.relocate(cursorSquare);
+		    		enemies.add(enemy7);
 		    	}
 		    	if(progress == 8){
 		    		enemy8 = new Enemy();
 		    		background1.add(enemy8);
 		    		enemyPrimeStatus[8] = enemy8.randomValue();
 		    		enemy8.relocate(cursorSquare);
+		    		enemies.add(enemy8);
 		    	}//end of progress8 enemy add
 		    	
 		    	if(gameModeVar==1){
